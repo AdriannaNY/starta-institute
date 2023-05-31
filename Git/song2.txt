@@ -1,0 +1,6 @@
+This is second example on new branch test
+Commit2
+some changes from main branch after merge
+some changes from test brench after merge
+commit3
+

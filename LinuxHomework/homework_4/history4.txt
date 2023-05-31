@@ -1,0 +1,6 @@
+   0 touch myfirstbashscript.sh
+   1 chmod u+x /root/myfirstbashscript.sh 
+   2 export USER=katia
+   3 nano myfirstbashscript.sh 
+   4 ./myfirstbashscript.sh 
+   5 history > history4.txt

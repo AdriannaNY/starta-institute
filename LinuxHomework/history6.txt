@@ -1,0 +1,27 @@
+   0 nano fullscript.sh
+   1 chmod 744 fullscript.sh 
+   2 ./fullscript.sh 
+   3 history > history6.txt
+#!/bin/bash
+echo "Hello Student!"
+echo "Enter your name"
+read name
+echo "Welcome to terminal, $name"
+mkdir /tmp/test /opt/mydate
+touch /tmp/mydate.txt
+date +'%H:%M:%S' > /tmp/mydate.txt
+echo "Data is saving..."
+for run10 in {1..10}
+do
+echo $run10
+sleep .5
+done
+echo "Data saved. Continue work"
+df -h >> /tmp/mydate.txt
+cp /tmp/mydate.txt /opt/mydate/newmydate.txt
+for run5 in {1..5}
+do
+echo $run5
+sleep 1
+done
+echo "Well done Boss"

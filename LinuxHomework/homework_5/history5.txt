@@ -1,0 +1,5 @@
+   0 > mysecondbashscript.sh
+   1 nano mysecondbashscript.sh 
+   2 chmod 744 mysecondbashscript.sh 
+   3 ./mysecondbashscript.sh 
+   4 history > history5.txt

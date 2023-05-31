@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    padding: 20px;
+}
+ h2 {
+    text-align: start;
+    margin: 50px;
+}
+.form-container, .users-container {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid rgb(56, 38, 108);
+    border-radius: 10px;
+    background-color: rgb(121, 206, 240);
+    box-shadow: 2px 2px 10px black;
+}
+.form-container {
+    margin-bottom: 50px;
+}
+.form-container h2 {
+    text-align: center;
+    margin: 10px 0;
+}
+.users-container h2 {
+    text-align: center;
+    margin: 10px 0;
+}
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.form-container form *:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.form-container form input {
+    padding: 15px 5px;
+}
+.form-container form button {
+    padding: 15px 5px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    color: azure;
+    font-size: 24px;
+    background-color: rgb(84, 139, 203);
+}
+.form-container form button:hover {
+    background-color: rgb(7, 8, 7);
+}
+.users-container .users {
+    display: flex;
+    flex-wrap: wrap;
+}
+.users-container .users .card {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(191, 165, 183);
+    box-shadow: 2px 2px 7px black;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 22px;
+    margin: 6px;
+    display: inline;
+}
+.users-container .users .card p:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+

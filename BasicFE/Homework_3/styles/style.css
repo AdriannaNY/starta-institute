@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.registration-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 420px;
+    height: 426px;
+    padding: 16px;
+    margin: 40px 0 0 60px;
+    border: 1px solid #CFD8DC;
+    border-radius: 20px;
+    box-shadow:  0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
+}
+
+.user-email {
+    position: absolute;
+    top: 96px;
+    left: 32px;
+}
+
+.user-password {
+    position: absolute;
+    top: 152px;
+    left: 32px;
+}
+
+input {
+    border: 1px solid #CFD8DC;
+    width: 356px;
+    height: 48px;
+    border-radius: 12px;
+    padding: 14px 24px;
+}
+
+input:focus-visible {
+    outline: none;
+    border-color: #FFE44D;
+}
+
+p {
+    position: absolute;
+    top: 224px;
+    left: 32px;
+    font-size: 12px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #7B8E98;
+}
+
+h1 {
+    position: absolute;
+    top: 40px;
+    left: 32px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+img {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 21px;
+    right: 21px;
+}
+
+.registration-button {
+    position: absolute;
+    top: 290px;
+    left: 32px;
+    border: 1px solid #CFD8DC;
+    background-color: #FFE44D;
+    width: 356px;
+    height: 48px;
+    border-radius: 55px; 
+}
+
+.enter-button {
+    position: absolute;
+    top: 346px;
+    left: 32px;
+    border: 1px solid #CFD8DC;
+    background-color: white;
+    width: 356px;
+    height: 48px;
+    border-radius: 55px; 
+}
+
+
+
+
+
+
+
+
