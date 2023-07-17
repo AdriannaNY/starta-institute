@@ -1,0 +1,551 @@
+
+Lection_#13
+12_07_2023_Inanc_Hayk
+Theme: Agregation in NoSQL (MongoDB)
+
+
+use tmp_1;
+
+db.createCollection('products');
+
+db.products.insertMany([
+  {
+    id: 1,
+    title: "Product 1",
+    price: 9.99,
+    marks: [4, 3, 5, 2],
+    countOfOrderedUnits: 10,
+    count: 0,
+    category: "sport"
+  },
+  {
+    id: 2,
+    title: "Product 2",
+    price: 19.99,
+    marks: [3, 4, 4, 2],
+    countOfOrderedUnits: 5,
+    count: 0,
+    category: "music"
+  },
+  {
+    id: 3,
+    title: "Product 3",
+    price: 14.99,
+    marks: [4, 5, 4, 3],
+    countOfOrderedUnits: 12,
+    count: 0,
+    category: "home"
+  },
+  {
+    id: 4,
+    title: "Product 4",
+    price: 24.99,
+    marks: [5, 4, 5, 5],
+    countOfOrderedUnits: 3,
+    count: 0,
+    category: "electronics"
+  },
+  {
+    id: 5,
+    title: "Product 5",
+    price: 39.99,
+    marks: [3, 3, 4, 2],
+    countOfOrderedUnits: 7,
+    count: 0,
+    category: "sport"
+  },
+  {
+    id: 6,
+    title: "Product 6",
+    price: 49.99,
+    marks: [4, 4, 4, 3],
+    countOfOrderedUnits: 2,
+    count: 0,
+    category: "music"
+  },
+  {
+    id: 7,
+    title: "Product 7",
+    price: 29.99,
+    marks: [4, 5, 5, 4],
+    countOfOrderedUnits: 15,
+    count: 0,
+    category: "home"
+  },
+  {
+    id: 8,
+    title: "Product 8",
+    price: 14.99,
+    marks: [5, 4, 4, 2],
+    countOfOrderedUnits: 9,
+    count: 0,
+    category: "electronics"
+  },
+  {
+    id: 9,
+    title: "Product 9",
+    price: 9.99,
+    marks: [3, 3, 3, 4],
+    countOfOrderedUnits: 6,
+    count: 0,
+    category: "sport"
+  },
+  {
+    id: 10,
+    title: "Product 10",
+    price: 19.99,
+    marks: [4, 5, 5, 3],
+    countOfOrderedUnits: 4,
+    count: 0,
+    category: "music"
+  },
+  {
+    id: 11,
+    title: "Product 11",
+    price: 24.99,
+    marks: [4, 4, 4, 2],
+    countOfOrderedUnits: 11,
+    count: 0,
+    category: "home"
+  },
+  {
+    id:  12,
+    title: "Product 12",
+    price: 34.99,
+    marks: [5, 5, 5, 4],
+    countOfOrderedUnits: 7,
+    count: 0,
+    category: "electronics"
+  },
+  {
+    id: 13,
+    title: "Product 13",
+    price: 9.99,
+    marks: [3, 3, 4, 2],
+    countOfOrderedUnits: 9,
+    count: 0,
+    category: "sport"
+  },
+  {
+    id: 14,
+    title: "Product 14",
+    price: 29.99,
+    marks: [4, 4, 4, 3],
+    countOfOrderedUnits: 6,
+    count: 0,
+    category: "music"
+  },
+  {
+    id: 15,
+    title: "Product 15",
+    price: 39.99,
+    marks: [5, 5, 5, 5],
+    countOfOrderedUnits: 3,
+    count: 0,
+    category: "home"
+  }
+]);
+
+TASKS:
+
+1. No group by, find average price, max & min price
+db.products.aggregate([
+    {$group: {
+        _id: null,
+        avgPrice: {$avg: '$price'},
+        minPrice: {$min: '$price'},
+        maxPrice: {$max: '$price'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: null,
+//   avgPrice: 25.723066666666668,
+//   minPrice: 9.99,
+//   maxPrice: 49.99
+// }
+
+
+2. Sum of prices in 'electronics'
+db.products.aggregate([
+    {$match: {category: 'electronics'}},
+    {$group: {
+        _id: null,
+        sumPrice: {$sum: '$price'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: null,
+//   sumPrice: 74.97
+// }
+
+
+3. Min price among 'sports'
+db.products.aggregate([
+    {$match: {category: 'sport'}},
+    {$group: {
+        _id: null,
+        minPrice: {$min: '$price'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: null,
+//   minPrice: 9.99
+// }
+
+
+4. Min price by group: category
+db.products.aggregate([
+    {$group: {
+        _id: '$category',
+        minPrice: {$min: '$price'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: 'outdoor',
+//   minPrice: 9.99
+// }
+// {
+//   _id: 'home',
+//   minPrice: 16.489
+// }
+// {
+//   _id: 'electronics',
+//   minPrice: 14.99
+// }
+// {
+//   _id: 'music',
+//   minPrice: 19.99
+// }
+
+
+5. Average count of ordered units grouped by category
+db.products.aggregate([
+    {$group: {
+        _id: '$category',
+        avgCount: {$avg: '$countOfOrderedUnits'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: 'music',
+//   avgCount: 5.25
+// }
+// {
+//   _id: 'outdoor',
+//   avgCount: 8
+// }
+// {
+//   _id: 'home',
+//   avgCount: 10.25
+// }
+// {
+//   _id: 'electronics',
+//   avgCount: 6.333333333333333
+// }
+
+
+6. Sum count of ordered units, grouped by category, exclude: category 'home'
+db.products.aggregate([
+    {$match: {category: {$ne: 'home'}}},
+    {$group: {
+        _id: '$category',
+        sumCount: {$sum: '$countOfOrderedUnits'}
+        }
+    }
+])
+// Output:
+// {
+//   _id: 'outdoor',
+//   sumCount: 32
+// }
+// {
+//   _id: 'music',
+//   sumCount: 21
+// }
+// {
+//   _id: 'electronics',
+//   sumCount: 19
+// }
+
+
+7. Sum, max, min count of ordered units, exclude 'home'
+db.products.aggregate([
+    {$match: {category: {$ne: 'home'}}},
+    {$group: {
+        _id: '$category',
+        sumCount: {$sum: '$countOfOrderedUnits'},
+        maxCount: {$max: '$countOfOrderedUnits'},
+        minCount: {$min: '$countOfOrderedUnits'}
+        }
+    }
+])
+Output:
+// {
+//   _id: 'outdoor',
+//   sumCount: 32,
+//   maxCount: 10,
+//   minCount: 6
+// }
+// {
+//   _id: 'music',
+//   sumCount: 21,
+//   maxCount: 7,
+//   minCount: 3
+// }
+// {
+//   _id: 'electronics',
+//   sumCount: 19,
+//   maxCount: 9,
+//   minCount: 3
+// }
+
+
+8. Title of product and it's max mark
+db.products.aggregate([
+   {$project: {_id: 1, title: 1, maxMark: {$max: '$marks'}}}
+])
+// Output:
+// {
+//   _id: ObjectId("64b4722111e5e96431fa0b62"),
+//   title: 'Product 1',
+//   maxMark: 5
+// }
+// etc...
+
+
+9. Average count of marks every product (1 step), output - total average count of all marks
+db.products.aggregate([
+   {$project: {_id: 1, countMarks: {$size: '$marks'}}},
+   {$group: {_id: null, avgMarks: {$avg: '$countMarks'}}}
+])
+// Output:
+// {
+//   _id: null,
+//   avgMarks: 4.066666666666666
+// }
+
+
+10. Total sum of all marks in output
+db.products.aggregate([
+   {$project: {_id: 1, sumMarks: {$sum: '$marks'}}},
+   {$group: {_id: null, totalSumMarks: {$sum: '$sumMarks'}}}
+])
+// Output:
+// {
+//   _id: null,
+//   totalSumMarks: 237
+// }
+
+
+NEW COLLECTION 'students'
+
+use tmp_1;
+
+db.createCollection('students');
+
+db.students.insertMany([
+  {
+    "name": "John",
+    "lastname": "Doe",
+    "marks": [4, 3, 5, 4, 5, 3, 4, 4, 3, 5, 2, 5, 4],
+    "subjects": ["Math", "Science", "English", "History"],
+    "class": 2
+  },
+  {
+    "name": "Jane",
+    "lastname": "Smith",
+    "marks": [3, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3],
+    "subjects": ["Math", "Science", "English", "Geography", "Art"],
+    "class": 3
+  },
+  {
+    "name": "David",
+    "lastname": "Johnson",
+    "marks": [5, 5, 4, 5, 5, 5, 4, 3, 4],
+    "subjects": ["Math", "Physics", "Chemistry"],
+    "class": 1
+  },
+  {
+    "name": "Sarah",
+    "lastname": "Williams",
+    "marks": [3, 4, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Science", "English", "History", "Geography"],
+    "class": 4
+  },
+  {
+    "name": "Michael",
+    "lastname": "Brown",
+    "marks": [2, 3, 4, 3, 4, 3, 4, 4, 4, 3, 4, 3, 4, 3],
+    "subjects": ["Math", "Science", "English"],
+    "class": 2
+  },
+  {
+    "name": "Emily",
+    "lastname": "Davis",
+    "marks": [4, 5, 4, 3, 4, 5, 5, 5, 5, 4, 5],
+    "subjects": ["Math", "Science", "English", "History", "Art"],
+    "class": 3
+  },
+  {
+    "name": "Daniel",
+    "lastname": "Miller",
+    "marks": [3, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Physics", "Chemistry", "Geography"],
+    "class": 1
+  },
+  {
+    "name": "Olivia",
+    "lastname": "Anderson",
+    "marks": [4, 3, 4, 3, 4, 4, 4, 3, 4, 4, 4, 3, 4],
+    "subjects": ["Math", "Science", "English", "History", "Geography"],
+    "class": 4
+  },
+  {
+    "name": "Matthew",
+    "lastname": "Wilson",
+    "marks": [3, 4, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Science", "English"],
+    "class": 2
+  },
+  {
+    "name": "Ava",
+    "lastname": "Taylor",
+    "marks": [4, 5, 4, 3, 4, 5, 5, 5, 5, 4, 5],
+    "subjects": ["Math", "Science", "English", "History", "Art"],
+    "class": 3
+  },
+  {
+    "name": "James",
+    "lastname": "Lee",
+    "marks": [3, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Physics", "Chemistry", "Geography"],
+    "class": 1
+  },
+  {
+    "name": "Sophia",
+    "lastname": "Martin",
+    "marks": [4, 3, 4, 3, 4, 4, 4, 3, 4, 4, 4, 3, 4],
+    "subjects": ["Math", "Science", "English", "History", "Geography"],
+    "class": 4
+  },
+  {
+    "name": "Benjamin",
+    "lastname": "Thompson",
+    "marks": [3, 4, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Science", "English"],
+    "class": 2
+  },
+  {
+    "name": "Isabella",
+    "lastname": "Garcia",
+    "marks": [4, 5, 4, 3, 4, 5, 5, 5, 5, 4, 5],
+    "subjects": ["Math", "Science", "English", "History", "Art"],
+    "class": 3
+  },
+  {
+    "name": "Daniel",
+    "lastname": "Clark",
+    "marks": [3, 3, 4, 4, 3, 4, 3, 4, 4, 3],
+    "subjects": ["Math", "Physics", "Chemistry", "Geography"],
+    "class": 1
+  }
+  ]);
+
+
+  TASKS:
+
+ 1. Students with gender 'm'
+  db.students.find(
+    {gender: 'm'},
+    {firstName:1, lastName:1} 
+    )
+
+ 2. Count of every student's marks
+ db.students.aggregate([
+   {$project: {name: 1, lastname: 1, countMarks: {$size: '$marks'}}}
+])
+// Output:
+// {
+//   _id: ObjectId("64b5119811e5e96431fa0b71"),
+//   name: 'John',
+//   lastname: 'Doe',
+//   countMarks: 13
+// }
+// {
+//   _id: ObjectId("64b5119811e5e96431fa0b72"),
+//   name: 'Jane',
+//   lastname: 'Smith',
+//   countMarks: 11
+// }
+
+
+3. Average count of class number in all COLLECTION
+db.students.aggregate([
+    {$group: {_id: null, avgCntClass: {$avg: '$class'}}}
+])
+// Output:
+// {
+//   _id: null,
+//   avgCntClass: 2.4
+// }
+
+
+4. Average count of class number for every gender
+db.students.aggregate([
+    {$project: {_id: '$gender', avgCntClass: {$avg: '$class'}}}
+])
+// Output:
+// {
+//     _id: 'm'
+//     avgCntClass: 4
+// }
+// {
+//     _id: 'f'
+//     avgCntClass: 3.8
+// }
+
+
+
+5. Average count of class number for every gender, exclude 6th class
+db.students.aggregate([
+    {$match: {class: {$ne: 6}}},
+    {$group: {_id: '$gender', avgCntClass: {$avg: '$class'}}}
+])
+// Output:
+// {
+//     _id: 'm'
+//     avgCntClass: 3.5
+// }
+// {
+//     _id: 'f'
+//     avgCntClass: 3.2
+// }
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
