@@ -1,0 +1,6 @@
+Исправьте код:
+
+class MyException extends Throwables {
+
+
+}
