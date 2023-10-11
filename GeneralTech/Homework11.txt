@@ -1,0 +1,29 @@
+// Task 1. Output the count of blocked users
+db.users.countDocuments({
+    is_blocked: true
+})
+
+// Task 2. Output countries of not blocked users
+db.users.find(
+    { is_blocked: { $ne: true } }, 
+    { country: 2, _id: 0 } 
+)
+
+// Task 3. Block users from China
+db.users.updateMany(
+    { country: 'China' }, 
+    { $set: { is_blocked: true } } 
+)
+
+// Task 4. Increase the balance of all not blocked users on 100
+db.users.updateMany(
+    { is_blocked: { $ne: true } },  
+    { $inc: { balance: 100 } }
+)
+
+// Task 5. Add some reactions in the collection reactions
+db.reactions.insertMany([
+    { _id: 1, author_id: 3, post_id: 1 },
+    { _id: 2, author_id: 1, post_id: 3 },
+    { _id: 3, author_id: 2, post_id: 2 }
+])
