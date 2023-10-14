@@ -1,0 +1,52 @@
+// 1. Найдите ошибки в след/запросе:
+// Увеличить баланс всем юзерам не из Germany на 25%
+// db.posts.updateOne(
+//   { country: 'Germany'  },
+//    { $inc: { balance: .75 } }
+// )
+
+db.users.updateMany(
+    { country: { $ne: 'Germany' } }, // filter
+    { $mul: { balance: 1.25 } } // action
+)
+
+
+// 2. Вывести все посты с тегом music
+
+db.posts.find(
+    { tag: 'music' }
+)
+
+
+// 3. Опишите назначение оператора $skip (и вход/выход)
+
+// $skip:1 = skip documents (1 = count of documents that must be skipped)
+// On entry: sorted collection
+// On exit: sorted collection started from second document (if skipped 1 document)
+
+
+// 4. Вывести названия постов и имена авторов, которые имеют отрицательный баланс
+
+db.posts.aggregate([
+    {
+        $lookup: {
+            'from': 'users',
+            'localField': 'author_id',
+            'foreignField': '_id',
+            'as': 'author'
+        }
+    },
+    { $unwind: '$author' },
+    { $match: { 'author.balance': { $lt: 0 } } },
+    {
+        $project: {
+            'content': 1,
+            'author_fullname': '$author.fullname',
+            '_id': 0
+        }
+    }
+])
+
+
+
+
