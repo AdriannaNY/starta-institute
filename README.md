@@ -1,1 +1,1 @@
-# Telran
+# Telran by Starta Institute
